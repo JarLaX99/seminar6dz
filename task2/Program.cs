@@ -4,30 +4,29 @@
 
 void main()
 {
-    double b1 = ReadDouble("Введите b1: ");
-    double k1 = ReadDouble("Введите k1: ");
-    double b2 = ReadDouble("Введите b2: ");
-    double k2 = ReadDouble("Введите k2: ");
-    double x = IntersectionPoinX(b1, k1, b2, k2);
-    double y = IntersectionPoinY(b1, k1, b2, k2);
-    System.Console.WriteLine($"({x};{y})");
+    double[] array = ReadDouble("Введите b1,k1,b2,k2 через пробел: ");
+    array = IntersectionPoin(array);
+    PrintArray(array);
+
 }
 
-double ReadDouble(string text)
+double[] ReadDouble(string text)
 {
     System.Console.Write(text);
-    return Convert.ToDouble(Console.ReadLine());
+    double[] array = Array.ConvertAll(Console.ReadLine()!.Split(), double.Parse);
+    return array;
 }
 
-double IntersectionPoinX(double b1, double k1, double b2, double k2)
+void PrintArray(double[] arrayForPrint)
 {
-    double x = (b2 - b1) / (k1 - k2);
-    return x;
+    System.Console.WriteLine("(" + string.Join(";", arrayForPrint) + ")");
 }
-double IntersectionPoinY(double b1, double k1, double b2, double k2)
+
+double[] IntersectionPoin(double[] arr)
 {
-    double x = (b2 - b1) / (k1 - k2);
-    double y = k1 * x + b1;
-    return y;
+    double[] newArrayXY = new double[2];//выделяем память под x и Y
+    newArrayXY[0] = (arr[2] - arr[0]) / (arr[1] - arr[3]);// ищем X по формуле X=(b2-b1)/(k1-k2)
+    newArrayXY[1] = arr[1] * newArrayXY[0] + arr[0];//ищем Y по формуле y = k1 * x + b1
+    return newArrayXY;
 }
 main();
